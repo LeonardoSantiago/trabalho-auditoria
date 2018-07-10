@@ -18,13 +18,22 @@
 
 <body class="d-flex justify-content-center  h-100">
     <div class="h-100 w-100">
-        <h1>Clientes</h1>
+        <div style="display: flex;">
+            <h1>Clientes</h1>
+            <a href="<%= goTo %>">
+                <button type="button" style="margin-left:40px;" class="btn btn-primary">
+                    Adicionar
+                </button>
+            </a>
+        </div>
+
 
         <table class="table table-striped mt-4">
             <thead>
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">Cpf</th>
+                    <th scope="col">Visualizar</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +44,9 @@
                         </td>
                         <td>
                             <%= clients[i].CPF %>
+                        </td>
+                        <td>
+                            <a href="<%= link + '/'+ clients[i].ID %>">SHOW </a>
                         </td>
                     </tr>
                     <% } %>
