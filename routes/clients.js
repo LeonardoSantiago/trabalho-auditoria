@@ -21,12 +21,14 @@ function getClients(callback) {
 
 
 
-router.get('/', function (req, res, next) {
+router.get('/:role', function (req, res, next) {
     getClients((err, result) => {
         if (err)
-            res.render('clients', { title: 'Express', clients: err, link: 'client', goTo: 'http://localhost:3000/client-new' })
-        else
-            res.render('clients', { title: 'Express', clients: result, link: 'client', goTo: 'http://localhost:3000/client-new' })
+            res.render('clients', { title: 'Express', clients: err, link: 'client', goTo: 'http://localhost:3000/client-new', Role: req.params.role })
+        else {
+            console.log(req.params);
+            res.render('clients', { title: 'Express', clients: result, link: 'client', goTo: 'http://localhost:3000/client-new', Role: req.params.role })
+        }
     })
 });
 

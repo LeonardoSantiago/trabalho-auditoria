@@ -20,7 +20,7 @@ function getDriver(callback) {
 }
 
 function getAuthentication(cpf, senha, callback) {
-  connection.query(`SELECT * FROM Users WHERE CPF = ${cpf} AND Senha = '(SHA1(${senha}))' LIMIT 1`,
+  connection.query(`SELECT * FROM Users WHERE CPF = '${cpf}' AND Senha = (SHA1('${senha}')) LIMIT 1`,
     function (err, rows) {
       //here we return the results of the query
       callback(err, rows);
@@ -31,12 +31,13 @@ router.post('/authentication', function (req, res, next) {
   const senha = req.body.senha.substring(0, 150);
   const cpf = req.body.cpf.substring(0, 11);
   getAuthentication(cpf, senha, (err, results) => {
-    if (err) {
+    if (err || results === '[]') {
       console.log(err)
       res.render('error');
     }
-    else
-      res.redirect('clients');
+    else {
+      res.render('login', { title: 'Express', user: results[0], goTo: `http://localhost:3000/clients/${results[0].Role}` });
+    }
   });
 });
 
